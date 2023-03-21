@@ -1,21 +1,18 @@
-const jokeElemn = document.getElementById('joke');
-const jokeBtn = document.getElementById('joke-btn');
+// we try with fetch api rather than ajax 
 
-const generateJoke = ()=>{
-   const xhr = new XMLHttpRequest();
-
-   xhr.open('GET', 'https://api.chucknorris.io/jokes/random')
-   xhr.onreadystatechange = function (){
-      if(this.readyState === 4 && this.status === 200){
-
-         jokeElemn.innerHTML = JSON.parse(this.responseText).value;
-      }
-   }
-   xhr.send();
+function getChuckJokes (){
+   fetch('https://api.chucknorris.io/jokes/random')
+   .then((res)=> res.json())
+   .then((data)=> generateJoke(data.value))
 }
 
+function generateJoke(jokes){
+
+   const jokeDisplayDiv = document.querySelector('#joke');
+   jokeDisplayDiv.innerHTML = `${jokes}`
 
 
+}
 
-jokeBtn.addEventListener('click', generateJoke);
-document.addEventListener('DOMContentLoaded', generateJoke)
+getChuckJokes();
+document.querySelector('#joke-btn').addEventListener('click', getChuckJokes);
