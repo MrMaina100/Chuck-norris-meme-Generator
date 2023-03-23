@@ -1,18 +1,18 @@
-// we try with fetch api rather than ajax 
+async function getChuckJokes (){
+   const res = await  fetch('https://api.chucknorris.io/jokes/random');
+   const data = await res.json();
 
-function getChuckJokes (){
-   fetch('https://api.chucknorris.io/jokes/random')
-   .then((res)=> res.json())
-   .then((data)=> generateJoke(data.value))
+   displayJokes(data.value);
 }
 
-function generateJoke(jokes){
+function displayJokes (jokes) {
 
-   const jokeDisplayDiv = document.querySelector('#joke');
-   jokeDisplayDiv.innerHTML = `${jokes}`
-
+   const jokeDivDisplay = document.querySelector('#joke');
+   jokeDivDisplay.innerHTML = `${jokes}`
 
 }
+
 
 getChuckJokes();
-document.querySelector('#joke-btn').addEventListener('click', getChuckJokes);
+document.querySelector('#joke-btn').addEventListener('click', getChuckJokes)
+document.body.addEventListener('DOMContentLoaded', getChuckJokes)
